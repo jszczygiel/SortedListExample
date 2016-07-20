@@ -16,13 +16,20 @@ public class MainMapper {
     public static List<BaseViewModel> map(ContactDataModel contactDataModel) {
         List<BaseViewModel> toReturn = new ArrayList<>();
 
-        toReturn.add(new PersonViewModel(contactDataModel.getId(), contactDataModel.getName(), contactDataModel.getImage()));
+        toReturn.add(new PersonViewModel(
+                contactDataModel.getId(),
+                contactDataModel.getName(),
+                contactDataModel.getImage()));
         for (String email : contactDataModel.getEmails()) {
-            toReturn.add(new EmailViewModel(contactDataModel.getId(), email));
+            toReturn.add(new EmailViewModel(
+                    contactDataModel.getId(),
+                    email));
         }
 
         for (String phone : contactDataModel.getPhoneNumbers()) {
-            toReturn.add(new PhoneViewModel(contactDataModel.getId(), phone));
+            toReturn.add(new PhoneViewModel(
+                    contactDataModel.getId(),
+                    phone));
         }
         return toReturn;
     }

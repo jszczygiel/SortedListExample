@@ -2,12 +2,12 @@ package com.jszczygiel.sortedlistexample.ui.interaction.models;
 
 import android.content.Context;
 
+import com.jszczygiel.sortedlistexample.ui.utils.RandomNumeric;
 import com.slmyldz.random.Randoms;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 
 public class ContactDataModel {
 
@@ -21,14 +21,18 @@ public class ContactDataModel {
 
         id = UUID.randomUUID().toString();
         name = Randoms.name(context);
-        image= Randoms.imageUrl("jpg");
+        image = "http://thecatapi.com/api/images/get?format=src&type=jpg&random=" + id;
         emails = new ArrayList<>();
-        emails.add(Randoms.email(context));
-        emails.add(Randoms.email(context));
+        int emailNumberCount = Randoms.Integer(1, 4);
+        for (int i = 0; i < emailNumberCount; i++) {
+            emails.add(Randoms.email(context));
+        }
 
         phoneNumbers = new ArrayList<>();
-        phoneNumbers.add(Randoms.alphaNumericString(9));
-        phoneNumbers.add(Randoms.alphaNumericString(9));
+        int phoneNumberCount = Randoms.Integer(1, 4);
+        for (int i = 0; i < phoneNumberCount; i++) {
+            phoneNumbers.add((new RandomNumeric(9)).nextString());
+        }
 
     }
 

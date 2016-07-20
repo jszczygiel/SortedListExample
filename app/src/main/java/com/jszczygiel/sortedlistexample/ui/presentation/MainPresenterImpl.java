@@ -28,12 +28,16 @@ public class MainPresenterImpl extends BasePresenterImpl<MainFragment> implement
     @Override
     public void onLoad() {
         if (isViewAvailable()) {
-            loadSubscription = dataInteractor.observeData().onBackpressureBuffer().map(new Func1<ContactDataModel, List<BaseViewModel>>() {
-                @Override
-                public List<BaseViewModel> call(ContactDataModel contactDataModel) {
-                    return MainMapper.map(contactDataModel);
-                }
-            }).subscribeOn(Schedulers.computation())
+            loadSubscription = dataInteractor
+                    .observeData()
+                    .onBackpressureBuffer()
+                    .map(new Func1<ContactDataModel, List<BaseViewModel>>() {
+                        @Override
+                        public List<BaseViewModel> call(ContactDataModel contactDataModel) {
+                            return MainMapper.map(contactDataModel);
+                        }
+                    })
+                    .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<List<BaseViewModel>>() {
                         @Override
@@ -68,14 +72,17 @@ public class MainPresenterImpl extends BasePresenterImpl<MainFragment> implement
     @Override
     public void onDelete(String id) {
         if (isViewAvailable()) {
-            Observable.from(getView().findById(id)).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<BaseViewModel>() {
-                @Override
-                public void call(BaseViewModel baseViewModel) {
-                    if (isViewAvailable()) {
-                        getView().remove(baseViewModel);
-                    }
-                }
-            });
+            Observable.from(getView().findById(id))
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<BaseViewModel>() {
+                        @Override
+                        public void call(BaseViewModel baseViewModel) {
+                            if (isViewAvailable()) {
+                                getView().remove(baseViewModel);
+                            }
+                        }
+                    });
         }
     }
 

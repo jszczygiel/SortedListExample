@@ -22,9 +22,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile('com.github.jszczygiel:android-common:b164bcb7e5') {
-        transitive = true
-    }
+    compile'com.github.jszczygiel:android-common:b164bcb7e5'
 
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'

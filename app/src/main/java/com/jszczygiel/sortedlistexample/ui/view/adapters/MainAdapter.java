@@ -81,27 +81,36 @@ public class MainAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private int compare(BaseViewModel o1, BaseViewModel o2) {
         int result = o1.getId().compareTo(o2.getId());
         if (result == 0) {
-
-            if (o1 instanceof PersonViewModel && (o2 instanceof EmailViewModel || o2 instanceof PhoneViewModel)) {
+            // order items within card
+            if (o1 instanceof PersonViewModel && !(o2 instanceof PersonViewModel)) {
+                // Person view model has to be displayed first
                 return -1;
-            } else if ((o1 instanceof EmailViewModel || o1 instanceof PhoneViewModel) && o2 instanceof PersonViewModel) {
+            } else if (!(o1 instanceof PersonViewModel) && o2 instanceof PersonViewModel) {
+                // Person view model has to be displayed first
                 return 1;
             } else if (o1 instanceof EmailViewModel && o2 instanceof PhoneViewModel) {
+                // Email have to be displayed before phone
                 return -1;
             } else if (o1 instanceof PhoneViewModel && o2 instanceof EmailViewModel) {
+                // Email have to be displayed before phone
                 return 1;
             } else if (o1.getClass().equals(o2.getClass())) {
+                // ordering within items of the same type
                 if (o1 instanceof PhoneViewModel) {
+                    // order of phone numbers is lexicographical
                     return ((PhoneViewModel) o1).getPhoneNumber().compareTo(((PhoneViewModel) o2).getPhoneNumber());
                 }
                 if (o1 instanceof EmailViewModel) {
+                    // order of emails is lexicographical
                     return ((EmailViewModel) o1).getEmail().compareTo(((EmailViewModel) o2).getEmail());
                 }
                 if (o1 instanceof PersonViewModel) {
+                    // only time we will compare person view model is while we delete, so we need to return result (0) to indicate match
                     return result;
                 }
             }
         } else {
+            // different card return result
             return result;
         }
 
